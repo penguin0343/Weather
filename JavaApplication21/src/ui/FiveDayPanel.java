@@ -47,6 +47,7 @@ public class FiveDayPanel extends RoundedPanel {
             dayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JLabel iconLabel = new JLabel(f.icon, SwingConstants.CENTER);
+            iconLabel.setForeground(Color.WHITE);
             iconLabel.setFont(new Font("SansSerif", Font.PLAIN, 32)); // to hơn
             iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
