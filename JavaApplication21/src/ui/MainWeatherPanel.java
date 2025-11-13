@@ -51,24 +51,27 @@ public class MainWeatherPanel extends JPanel {
     }
 
     private JPanel createCenterRight() {
+        JPanel rightWrapper = new JPanel(new GridBagLayout());
+        rightWrapper.setOpaque(false);
+        rightWrapper.setPreferredSize(new Dimension(350, 560));
+
         JPanel right = new JPanel();
-        right.setPreferredSize(new Dimension(360, 560));
         right.setOpaque(false);
         right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-        right.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
+        right.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
         fiveDayPanel = new FiveDayPanel();
         aqPanel = new AirQualityPanel();
         sunHumPanel = new SunriseHumidityPanel();
 
-        right.add(Box.createVerticalGlue());
         right.add(fiveDayPanel);
-        right.add(Box.createVerticalStrut(16));
+        right.add(Box.createVerticalStrut(24));
         right.add(aqPanel);
-        right.add(Box.createVerticalStrut(16));
+        right.add(Box.createVerticalStrut(24));
         right.add(sunHumPanel);
-        right.add(Box.createVerticalGlue());
-        return right;
+        //right.add(Box.createVerticalGlue());
+        rightWrapper.add(right, new GridBagConstraints());
+        return rightWrapper;
     }
 
     public void updateWeather(WeatherData d) {

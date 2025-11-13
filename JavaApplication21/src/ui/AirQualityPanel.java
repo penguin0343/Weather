@@ -13,7 +13,7 @@ public class AirQualityPanel extends RoundedPanel {
             super(20, new Color(255, 255, 255, 25));
             setOpaque(false);
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            setBorder(new EmptyBorder(12, 16, 12, 16));
+            setBorder(new EmptyBorder(22, 26, 22, 26));
 
             titleLabel = new JLabel("AIR QUALITY");
             titleLabel.setForeground(Color.WHITE);

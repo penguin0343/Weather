@@ -14,16 +14,16 @@ public class FiveDayPanel extends RoundedPanel {
             super(20, new Color(255, 255, 255, 25));
             setLayout(new BorderLayout());
             setOpaque(false);
-            setBorder(new EmptyBorder(12, 12, 12, 12));
+            setBorder(new EmptyBorder(30, 11, 30, 11));
 
             JLabel title = new JLabel("5-Days Forecast", SwingConstants.LEFT);
             title.setForeground(Color.WHITE);
             title.setFont(new Font("SansSerif", Font.BOLD, 14));
             add(title, BorderLayout.NORTH);
 
-            listPanel = new JPanel(new GridLayout(1, 5, 10, 0));
+            listPanel = new JPanel(new GridLayout(1, 5, 5, 0));
             listPanel.setOpaque(false);
-            listPanel.setBorder(new EmptyBorder(8, 0, 0, 0));
+            listPanel.setBorder(new EmptyBorder(8, 2, 2, 2));
             add(listPanel, BorderLayout.CENTER);
         }
 
@@ -52,13 +52,13 @@ public class FiveDayPanel extends RoundedPanel {
 
             JLabel tempLabel = new JLabel((int) f.maxTemp + "° / " + (int) f.minTemp + "°", SwingConstants.CENTER);
             tempLabel.setForeground(Color.WHITE);
-            tempLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            tempLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
             tempLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             card.add(dayLabel);
-            card.add(Box.createVerticalStrut(6));
+            card.add(Box.createVerticalStrut(4));
             card.add(iconLabel);
-            card.add(Box.createVerticalStrut(6));
+            card.add(Box.createVerticalStrut(4));
             card.add(tempLabel);
             return card;
         }

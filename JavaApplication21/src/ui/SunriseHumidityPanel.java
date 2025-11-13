@@ -22,7 +22,7 @@ public class SunriseHumidityPanel extends JPanel {
         private RoundedPanel makeCard(JLabel l) {
             RoundedPanel p = new RoundedPanel(12, new Color(255, 255, 255, 20));
             p.setLayout(new BorderLayout());
-            p.setBorder(new EmptyBorder(12, 12, 12, 12));
+            p.setBorder(new EmptyBorder(22, 26, 22, 26));
             l.setForeground(Color.WHITE);
             l.setHorizontalAlignment(SwingConstants.CENTER);
             p.add(l, BorderLayout.CENTER);

@@ -20,6 +20,8 @@ public class WeatherApp {
         frame.setSize(1200, 720);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
+        //Co dinh size
+        frame.setResizable(false);
 
         JPanel root = new GradientPanel();
         root.setLayout(new BorderLayout());
