@@ -12,8 +12,8 @@ public class Main {
         javax.swing.Timer t = new javax.swing.Timer(600, e -> {
             WeatherData d = new WeatherData();
             d.location = "Ha Noi, Viet Nam";
-            d.description = "Mostly sunny";
-            d.currentTemp = 19; d.maxTemp = 35; d.minTemp = 19; d.airQualityIndex = 80; d.humidity = 40;
+            d.description = "Mostly cloudy";
+            d.currentTemp = 20; d.maxTemp = 35; d.minTemp = 19; d.airQualityIndex = 80; d.humidity = 40;
 
             Calendar c = Calendar.getInstance();
             c.set(Calendar.HOUR_OF_DAY, 5); c.set(Calendar.MINUTE, 28);
