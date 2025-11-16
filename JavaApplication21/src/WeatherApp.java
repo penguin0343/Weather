@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import components.*;
+import ui.SettingsPanel;
 import ui.*;
 import model.*;
 
@@ -9,7 +10,8 @@ public class WeatherApp {
     private CardLayout mainCards;
     private JPanel mainCardPanel;
     private MainWeatherPanel mainWeatherPanel;
-
+    private SettingsPanel settingsPanel;
+    
     public WeatherApp() {
         SwingUtilities.invokeLater(this::createAndShowGUI);
     }
@@ -36,9 +38,10 @@ public class WeatherApp {
         mainCardPanel.setOpaque(false);
 
         mainWeatherPanel = new MainWeatherPanel();
+        settingsPanel = new SettingsPanel();
         mainCardPanel.add(mainWeatherPanel, "MAIN");
         mainCardPanel.add(createPlaceholderPanel("Search (to implement)"), "SEARCH");
-        mainCardPanel.add(createPlaceholderPanel("Setting (to implement)"), "SETTING");
+        mainCardPanel.add(settingsPanel, "SETTING");//Tích hợp setting
 
         root.add(mainCardPanel, BorderLayout.CENTER);
         frame.add(root, BorderLayout.CENTER);
