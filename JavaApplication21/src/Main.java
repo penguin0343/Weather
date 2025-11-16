@@ -11,7 +11,7 @@ public class Main {
         WeatherApp app = new WeatherApp();
         javax.swing.Timer t = new javax.swing.Timer(600, e -> {
             WeatherData d = new WeatherData();
-            d.location = "Ha Noi, Viet Nam";
+            d.location = "Bac Ninh, Viet Nam";
             d.description = "Mostly cloudy";
             d.currentTemp = 20; d.maxTemp = 35; d.minTemp = 19; d.airQualityIndex = 80; d.humidity = 40;
 
