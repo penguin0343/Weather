@@ -37,7 +37,7 @@ public class WeatherApp {
 
         mainWeatherPanel = new MainWeatherPanel();
         mainCardPanel.add(mainWeatherPanel, "MAIN");
-        mainCardPanel.add(createPlaceholderPanel("Search (to implement)"), "SEARCH");
+        mainCardPanel.add(searchPanel, "SEARCH");
         mainCardPanel.add(createPlaceholderPanel("Setting (to implement)"), "SETTING");
 
         root.add(mainCardPanel, BorderLayout.CENTER);
