@@ -38,10 +38,12 @@ public class WeatherApp {
 
         mainWeatherPanel = new MainWeatherPanel();
         mainCardPanel.add(mainWeatherPanel, "MAIN");
-        searchPanel = new SearchPanel(e -> {
-          String city = e.getActionCommand();
-          System.out.println("Search city: " + city);
-        });
+searchPanel = new SearchPanel(e -> {
+    String city = e.getActionCommand();
+    System.out.println("Search city: " + city);
+    // TODO: gọi API hoặc load weather theo city
+});
+mainCardPanel.add(searchPanel, "SEARCH");
         mainCardPanel.add(searchPanel, "SEARCH");
         mainCardPanel.add(createPlaceholderPanel("Setting (to implement)"), "SETTING");
 
