@@ -19,7 +19,7 @@ public class SearchPanel extends JPanel {
         setLayout(new GridBagLayout());
 
         RoundedPanel wrapper = new RoundedPanel(25, new Color(255, 255, 255, 25));
-        wrapper.setPreferredSize(new Dimension(850, 500));
+        wrapper.setPreferredSize(new Dimension(850, 550));
         wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
         wrapper.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
 
