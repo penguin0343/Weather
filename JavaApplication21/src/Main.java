@@ -21,11 +21,31 @@ public class Main {
             c.set(Calendar.HOUR_OF_DAY, 19); c.set(Calendar.MINUTE, 20);
             d.sunset = c.getTime();
 
-            d.hourly = new ArrayList<>();
-            d.hourly.add(new HourlyData("Now", 19, "⛅"));
-            for (int i = 1; i <= 7; i++)
-                d.hourly.add(new HourlyData(String.format("%02d:00", (15 + i) % 24), 20 + i % 3, i % 2 == 0 ? "🌧" : "☁"));
+d.hourly = new ArrayList<>();
 
+Calendar now = Calendar.getInstance();
+int curHour = now.get(Calendar.HOUR_OF_DAY); // giờ hiện tại
+
+ArrayList<HourlyData> hours = new ArrayList<>();
+for (int i = 0; i < 24; i++) {
+    int h = (curHour + i) % 24;
+    String label;
+    if (i == 0) {
+        // Hiển thị "Now (12:00)" nếu bạn muốn kèm giờ trong ngoặc
+        label = String.format("Now (%02d:00)", curHour);
+        // hoặc nếu chỉ muốn "Now" -> label = "Now";
+    } else {
+        label = String.format("%02d:00", h);
+    }
+
+    // Ví dụ tạo icon và nhiệt độ giả
+    String icon = (h % 2 == 0 ? "☁" : "🌧");
+    int temp = 20 + (h % 3);
+
+    hours.add(new HourlyData(label, temp, icon));
+}
+
+d.hourly = hours;
             d.daily = Arrays.asList(
                     new DailyData("Mon", 28, 22, "🌦"),
                     new DailyData("Tue", 36, 25, "☀"),
