@@ -9,6 +9,7 @@ public class WeatherApp {
     private CardLayout mainCards;
     private JPanel mainCardPanel;
     private MainWeatherPanel mainWeatherPanel;
+    private Component searchPanel;
 
     public WeatherApp() {
         SwingUtilities.invokeLater(this::createAndShowGUI);
@@ -37,6 +38,10 @@ public class WeatherApp {
 
         mainWeatherPanel = new MainWeatherPanel();
         mainCardPanel.add(mainWeatherPanel, "MAIN");
+        searchPanel = new SearchPanel(e -> {
+          String city = e.getActionCommand();
+          System.out.println("Search city: " + city);
+        });
         mainCardPanel.add(searchPanel, "SEARCH");
         mainCardPanel.add(createPlaceholderPanel("Setting (to implement)"), "SETTING");
 
@@ -48,7 +53,14 @@ public class WeatherApp {
     }
 
     private JPanel createSidebar() {
-        JPanel bar = new JPanel();
+        RoundedPanel bar = new RoundedPanel(25, new Color(255, 255, 255, 25));
+        bar.setPreferredSize(new Dimension(96, 0));
+
+
+        bar.setBackground(new Color(255, 255, 255, 40)); 
+        bar.setOpaque(false); 
+
+        bar.setLayout(new GridLayout(6, 1, 10, 10));
         bar.setPreferredSize(new Dimension(96, 0));
         bar.setOpaque(false);
         bar.setLayout(new GridLayout(6, 1, 10, 10));
