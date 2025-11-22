@@ -38,7 +38,7 @@ for (int i = 0; i < 24; i++) {
         label = String.format("%02d:00", h);
     }
 
-    // Ví dụ tạo icon và nhiệt độ giả
+    // Ví dụ tạo icon và nhiệt độ giả   
     String icon = (h % 2 == 0 ? "☁" : "🌧");
     int temp = 20 + (h % 3);
 
