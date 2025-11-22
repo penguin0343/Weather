@@ -1,15 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import components.*;
+import components.*; // Import các components như RoundedPanel, IconMenuButton, SettingsConstants...
 import ui.*;
 import model.*;
 
-public class WeatherApp {
+public class WeatherApp implements SettingsConstants { // Thêm implements SettingsConstants để dùng hằng số màu sắc
     private JFrame frame;
     private CardLayout mainCards;
     private JPanel mainCardPanel;
     private MainWeatherPanel mainWeatherPanel;
     private Component searchPanel;
+    
+    // Thêm SettingsContentPanel
+    private SettingsContentPanel settingsPanel; 
 
     public WeatherApp() {
         SwingUtilities.invokeLater(this::createAndShowGUI);
@@ -18,12 +21,12 @@ public class WeatherApp {
     private void createAndShowGUI() {
         frame = new JFrame("Weather App - OOP Assignment");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 720);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT); // Sử dụng hằng số
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
-        //Co dinh size
         frame.setResizable(false);
 
+        // Sử dụng GradientPanel (giả định đây là lớp đã được cung cấp)
         JPanel root = new GradientPanel();
         root.setLayout(new BorderLayout());
         root.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -38,14 +41,17 @@ public class WeatherApp {
 
         mainWeatherPanel = new MainWeatherPanel();
         mainCardPanel.add(mainWeatherPanel, "MAIN");
-searchPanel = new SearchPanel(e -> {
-    String city = e.getActionCommand();
-    System.out.println("Search city: " + city);
-    // TODO: gọi API hoặc load weather theo city
-});
-mainCardPanel.add(searchPanel, "SEARCH");
+
+        searchPanel = new SearchPanel(e -> {
+            String city = e.getActionCommand();
+            System.out.println("Search city: " + city);
+            // TODO: gọi API hoặc load weather theo city
+        });
         mainCardPanel.add(searchPanel, "SEARCH");
-        mainCardPanel.add(createPlaceholderPanel("Setting (to implement)"), "SETTING");
+        
+        // *** THAY ĐỔI TẠI ĐÂY: Thêm SettingsContentPanel ***  
+        settingsPanel = new SettingsContentPanel(); 
+        mainCardPanel.add(settingsPanel, "SETTING");
 
         root.add(mainCardPanel, BorderLayout.CENTER);
         frame.add(root, BorderLayout.CENTER);
@@ -55,16 +61,9 @@ mainCardPanel.add(searchPanel, "SEARCH");
     }
 
     private JPanel createSidebar() {
-        RoundedPanel bar = new RoundedPanel(25, new Color(255, 255, 255, 25));
-        bar.setPreferredSize(new Dimension(96, 0));
-
-
-        bar.setBackground(new Color(255, 255, 255, 40)); 
-        bar.setOpaque(false); 
-
-        bar.setLayout(new GridLayout(6, 1, 10, 10));
-        bar.setPreferredSize(new Dimension(96, 0));
-        bar.setOpaque(false);
+        // Sử dụng RoundedPanel và hằng số
+        RoundedPanel bar = new RoundedPanel(25, new Color(255, 255, 255, 40)); 
+        bar.setPreferredSize(new Dimension(SIDEBAR_WIDTH, 0)); 
         bar.setLayout(new GridLayout(6, 1, 10, 10));
 
         JButton btnMain = new IconMenuButton("☰", "Main");
@@ -73,15 +72,23 @@ mainCardPanel.add(searchPanel, "SEARCH");
 
         btnMain.addActionListener(e -> mainCards.show(mainCardPanel, "MAIN"));
         btnSearch.addActionListener(e -> mainCards.show(mainCardPanel, "SEARCH"));
-        btnSetting.addActionListener(e -> mainCards.show(mainCardPanel, "SETTING"));
+        // Liên kết nút setting với panel setting
+        btnSetting.addActionListener(e -> mainCards.show(mainCardPanel, "SETTING")); 
 
         bar.add(btnMain);
         bar.add(btnSearch);
         bar.add(btnSetting);
+        
+        // Thêm các ô trống (placeholder) để căn chỉnh các icon lên trên (giống SettingsSidebar)
+        bar.add(new JPanel() {{ setOpaque(false); }});
+        bar.add(new JPanel() {{ setOpaque(false); }});
+        bar.add(new JPanel() {{ setOpaque(false); }});
+
 
         return bar;
     }
 
+    // Hàm này không còn cần thiết vì đã có SettingsContentPanel
     private JPanel createPlaceholderPanel(String text) {
         JPanel p = new JPanel(new BorderLayout());
         p.setOpaque(false);
@@ -93,6 +100,8 @@ mainCardPanel.add(searchPanel, "SEARCH");
     }
 
     public void updateWeather(WeatherData data) {
-        mainWeatherPanel.updateWeather(data);
+        if (mainWeatherPanel != null) {
+            mainWeatherPanel.updateWeather(data);
+        }
     }
 }
