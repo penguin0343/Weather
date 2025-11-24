@@ -19,10 +19,27 @@ public class DatabaseConnector {
     Connection conn = null;
     Statement stmt = null;
     ResultSet rs = null;
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public Statement getStmt() {
+        return stmt;
+    }
+
+    public ResultSet getRs() {
+        return rs;
+    }
+      
+    
     
     public DatabaseConnector(String host, String port) {
         try {
             String connectUrl = "jdbc:mysql://" + host + ":" + port + "/" + this.database;
+            conn = DriverManager.getConnection(connectUrl, user, password);
+            stmt = conn.createStatement();
+            
             System.out.println("Ket noi thanh cong den mysql");
         } catch (Exception e) {
             e.printStackTrace();

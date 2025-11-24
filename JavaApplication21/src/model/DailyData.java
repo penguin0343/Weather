@@ -1,10 +1,11 @@
 package model;
 
 public class DailyData {
-    public String dayOfWeek, icon;
-    public double maxTemp, minTemp;
+    public int dayOfWeek;
+    public String icon;
+    public float maxTemp, minTemp;
 
-    public DailyData(String d, double max, double min, String ic) {
+    public DailyData(int d, float max, float min, String ic) {
         dayOfWeek = d;
         maxTemp = max;
         minTemp = min;
