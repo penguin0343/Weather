@@ -29,7 +29,7 @@ public class SunriseHumidityPanel extends JPanel {
             return p;
         }
 
-        public void update(Date sunrise, Date sunset, int humidity) {
+        public void update(Date sunrise, Date sunset, float humidity) {
             SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
             sunLabel.setText(String.format("<html><b>Sunrise:</b> %s<br><b>Sunset:</b> %s</html>", fmt.format(sunrise), fmt.format(sunset)));
             humLabel.setText(String.format("<html><b>Humidity:</b> %d%%</html>", humidity));

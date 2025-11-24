@@ -7,6 +7,7 @@ import model.HourlyData;
 import model.WeatherData;
 import db_connect.NgrokConnector;
 import db_connect.DatabaseConnector;
+import db_connect.DbQuery;
 import java.util.Map;
 
 public class Main {
@@ -21,7 +22,8 @@ public class Main {
         
         DatabaseConnector dbconnector = new DatabaseConnector(host, port);
         
-        
+        DbQuery dbquery = new DbQuery(dbconnector.getConn(), dbconnector.getStmt(), dbconnector.getRs());
+        dbquery.getCurrentWeather();
         
         
 //        WeatherApp app = new WeatherApp();
@@ -79,6 +81,7 @@ public class Main {
 //            app.updateWeather(d);
 //            ((javax.swing.Timer) e.getSource()).stop();
 //        });
+        
 //        t.start();
 
 
