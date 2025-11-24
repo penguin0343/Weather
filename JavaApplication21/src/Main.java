@@ -23,7 +23,14 @@ public class Main {
         DatabaseConnector dbconnector = new DatabaseConnector(host, port);
         
         DbQuery dbquery = new DbQuery(dbconnector.getConn(), dbconnector.getStmt(), dbconnector.getRs());
-        dbquery.getCurrentWeather();
+        Map<String, WeatherData> weather_map = dbquery.getWeather();
+        
+        for(Map.Entry<String, WeatherData> entry : weather_map.entrySet()){
+            System.out.println(entry.getKey());
+            WeatherData wd = entry.getValue();
+            System.out.println(wd.airQualityIndex);
+        }
+        
         
         
 //        WeatherApp app = new WeatherApp();

@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 
 public class WeatherData {
+
     public String location, description;
     public float currentTemp, maxTemp, minTemp, humidity;
     public java.util.List<HourlyData> hourly;
@@ -23,6 +24,5 @@ public class WeatherData {
         this.sunrise = sunrise;
         this.sunset = sunset;
     }
-    
-    
+
 }

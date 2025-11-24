@@ -1,10 +1,11 @@
 package model;
 
 public class HourlyData {
-    public String time, icon;
-    public double temp;
+    public int time;
+    public String icon;
+    public float temp;
 
-    public HourlyData(String t, double tmp, String ic) {
+    public HourlyData(int t, float tmp, String ic) {
         time = t;
         temp = tmp;
         icon = ic;
