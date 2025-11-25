@@ -11,6 +11,7 @@ import db_connect.NgrokConnector;
 import db_connect.DatabaseConnector;
 import db_connect.DbQuery;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 
 public class Main {
 
@@ -32,18 +33,21 @@ public class Main {
 //            WeatherData wd = entry.getValue();
 //            System.out.println(wd.airQualityIndex);
 //        }
-        WeatherApp app = new WeatherApp();
-        Map<String, WeatherData> weather_map = dbquery.getWeather();
-        app.updateWeather(weather_map);
-        javax.swing.Timer t = new javax.swing.Timer(600, e -> {
-            
-            Map<String, WeatherData> new_weather_map = dbquery.getWeather();
-            app.updateWeather(new_weather_map);
-            
-            ((javax.swing.Timer) e.getSource()).stop();
-        });
+        Map<String, WeatherData> initial_map = dbquery.getWeather();
 
-        t.start();
+        WeatherApp app = new WeatherApp(initial_map);
+        SwingUtilities.invokeLater(() -> {
+            Map<String, WeatherData> weather_map = dbquery.getWeather();
+            app.updateWeather(weather_map);
+            
+            // Timer để cập nhật định kỳ
+            javax.swing.Timer t = new javax.swing.Timer(600000, e -> { // 10 phút = 600000ms
+                Map<String, WeatherData> new_weather_map = dbquery.getWeather();
+                app.updateWeather(new_weather_map);
+            });
+            t.setRepeats(true); // Lặp lại thay vì stop
+            t.start();
+        });
 
     }
 }

@@ -20,9 +20,13 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
     // Thêm SettingsContentPanel
     private SettingsContentPanel settingsPanel;
     private Map<String, WeatherData> wm;
-    
-    
-    public WeatherApp() {
+    private WeatherData cwd;
+    private WeatherData rwd;
+
+    public WeatherApp(Map<String, WeatherData> wm) {
+        String defaultLocation = ConfigManager.defaultLocation;
+        cwd = wm.get(defaultLocation);
+        rwd = cwd;
         instance = this;
         SwingUtilities.invokeLater(this::createAndShowGUI);
     }
@@ -127,26 +131,45 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
     public void updateWeather(Map<String, WeatherData> weatherMap) {
         wm = weatherMap;
         String defaultLocation = ConfigManager.defaultLocation;
-        WeatherData currentLocationWeather = weatherMap.get(defaultLocation);
-        currentLocationWeather.convertTemp_K_to_C();
+        cwd = weatherMap.get(defaultLocation);
+        cwd.convertTemp_K_to_C();
         if (mainWeatherPanel != null) {
-            mainWeatherPanel.updateWeather(currentLocationWeather);
-        }
-    }
-    
-    public void changeWeatherLocation(String location) {
-        WeatherData currentLocationWeather = wm.get(location);
-        currentLocationWeather.convertTemp_K_to_C();
-        if (mainWeatherPanel != null) {
-            mainWeatherPanel.updateWeather(currentLocationWeather);
+            mainWeatherPanel.updateWeather(cwd);
         }
     }
 
-    public void changePanel() {
-        String location = ConfigManager.defaultLocation;
+    public boolean changeWeatherLocation(String location) {
+
+        rwd = cwd;
+        cwd = wm.get(location);
+        if (rwd.location.trim().equalsIgnoreCase(location.trim())) {
+            return false;
+        }
+        if (cwd.currentTemp > 200) {
+            cwd.convertTemp_K_to_C();
+        }
+        if (mainWeatherPanel != null) {
+            mainWeatherPanel.updateWeather(cwd);
+        }
+        return true;
+    }
+
+    public boolean changePanel() {
         
-        changeWeatherLocation(location);
+        boolean result = true;
+        String location = ConfigManager.defaultLocation;
+
+        result = changeWeatherLocation(location);
         mainCards.show(mainCardPanel, "MAIN");
+        return result;
+    }
+
+    public WeatherData getCurrentWeatherData() {
+        return cwd;
+    }
+
+    public WeatherData getRecentWeatherData() {
+        return rwd;
     }
 
     public static WeatherApp getInstance() {

@@ -17,7 +17,7 @@ public class ConfigManager {
     public static String defaultLocation = "Hanoi";
     public ArrayList<String> locationList;
     private enum tempMetric {C, F, K};
-    private tempMetric curentTempMetric;
+    public static tempMetric curentTempMetric;
             
             
             
@@ -39,8 +39,8 @@ public class ConfigManager {
         this.defaultLocation = defaultLocation;
     }
 
-    public String getCurentTempMetric() {
-        return ""+curentTempMetric+"";
+    public static String getCurentTempMetric() {
+        return curentTempMetric+""+"";
     }
 
 
