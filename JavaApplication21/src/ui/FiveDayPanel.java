@@ -4,12 +4,16 @@ import components.RoundedPanel;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.format.TextStyle;
 import javax.swing.border.EmptyBorder;
 import java.util.List;
+import java.util.Locale;
 
 public class FiveDayPanel extends RoundedPanel {
         private JPanel listPanel;
-
+//
         public FiveDayPanel() {
             super(20, new Color(255, 255, 255, 25));
             setLayout(new BorderLayout());
@@ -26,7 +30,7 @@ public class FiveDayPanel extends RoundedPanel {
             listPanel.setBorder(new EmptyBorder(8, 2, 2, 2));
             add(listPanel, BorderLayout.CENTER);
         }
-
+//
         public void updateForecast(List<DailyData> forecasts) {
             listPanel.removeAll();
             for (DailyData f : forecasts)
@@ -41,7 +45,10 @@ public class FiveDayPanel extends RoundedPanel {
             card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
             card.setBorder(new EmptyBorder(4, 4, 4, 4));
 
-            JLabel dayLabel = new JLabel(f.dayOfWeek, SwingConstants.CENTER);
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime nextday = now.plusDays(f.dayOfWeek);
+            DayOfWeek nextdayofweek = nextday.getDayOfWeek();
+            JLabel dayLabel = new JLabel(nextdayofweek.getDisplayName(TextStyle.FULL, Locale.ENGLISH), SwingConstants.CENTER);
             dayLabel.setForeground(Color.WHITE);
             dayLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
             dayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

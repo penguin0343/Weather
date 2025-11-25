@@ -1,16 +1,29 @@
 package ui;
 
+import app.WeatherApp;
 import components.RoundedPanel;
+import config.ConfigManager;
+import app.WeatherApp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import jdk.jshell.SourceCodeAnalysis;
 
 public class SearchPanel extends JPanel {
 
+    private static final List<String> DATA = Arrays.asList(
+            "Hanoi", "Danang", "HCM"
+    );
     private JTextField searchField;
     private ActionListener callback;
+    private Stack<String> historyStack;
 
     public SearchPanel(ActionListener callback) {
         this.callback = callback;
@@ -37,7 +50,68 @@ public class SearchPanel extends JPanel {
         searchField.setOpaque(false);
         searchField.setForeground(Color.WHITE);
         searchField.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
-        searchField.addActionListener(e -> submitSearch());
+
+        JPopupMenu suggestionPopUp = new JPopupMenu();
+
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SwingUtilities.invokeLater(() -> showSuggestions());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SwingUtilities.invokeLater(() -> showSuggestions());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+
+            private void showSuggestions() {
+                String input = searchField.getText().trim().toLowerCase();
+                suggestionPopUp.setVisible(false);
+                suggestionPopUp.removeAll();
+
+                if (input.isEmpty()) {
+                    return;
+                }
+
+                for (String s : DATA) {
+                    if (s.toLowerCase().contains(input)) {
+                        JMenuItem item = new JMenuItem(s);
+
+                        item.addActionListener(e -> {
+                            searchField.setText(s);
+                            suggestionPopUp.setVisible(false);
+                        });
+
+                        suggestionPopUp.add(item);
+                    }
+
+                }
+                if (suggestionPopUp.getComponentCount() > 0) {
+                    int width = searchField.getWidth();
+                    int count = suggestionPopUp.getComponentCount();
+                    int basicHeight = 40;
+                    int height = basicHeight * count;
+                    suggestionPopUp.setPreferredSize(new Dimension(width, height));
+                    suggestionPopUp.show(searchField, 0, searchField.getHeight());
+                    searchField.requestFocusInWindow();
+                }
+            }
+        });
+
+        searchField.addActionListener(e -> {
+            suggestionPopUp.setVisible(false);
+            String selectedValue = searchField.getText();
+            ConfigManager.defaultLocation = selectedValue;
+
+            SwingUtilities.invokeLater(()
+                    -> WeatherApp.getInstance().changePanel()
+            );
+
+        });
 
         JPanel iconPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         iconPanel.setOpaque(false);
@@ -50,11 +124,12 @@ public class SearchPanel extends JPanel {
         wrapper.add(Box.createVerticalStrut(20));
 
         // ===== SECTIONS =====
+//        Section đầu tiên cho vị trí vừa xem (Cần lưu lích sử)
         wrapper.add(createSection("RECENT",
                 makeCityCard("Ho Chi Minh", "Heavy rain", "🌧", 35, 19)
         ));
         wrapper.add(Box.createVerticalStrut(20));
-
+//         Section thứ 2 là của current
         wrapper.add(createSection("CURRENT LOCATION",
                 makeCityCard("Ha Noi", "Mostly sunny", "🌤", 35, 19)
         ));
@@ -123,6 +198,7 @@ public class SearchPanel extends JPanel {
         card.add(right, BorderLayout.EAST);
 
         card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         card.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

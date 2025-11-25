@@ -1,20 +1,29 @@
+package app;
+
 import javax.swing.*;
 import java.awt.*;
 import components.*; // Import các components như RoundedPanel, IconMenuButton, SettingsConstants...
+import config.ConfigManager;
+import java.util.Map;
 import ui.*;
 import model.*;
+import model.WeatherData;
 
 public class WeatherApp implements SettingsConstants { // Thêm implements SettingsConstants để dùng hằng số màu sắc
+
     private JFrame frame;
     private CardLayout mainCards;
     private JPanel mainCardPanel;
     private MainWeatherPanel mainWeatherPanel;
     private Component searchPanel;
-    
+    private static WeatherApp instance;
     // Thêm SettingsContentPanel
-    private SettingsContentPanel settingsPanel; 
-
+    private SettingsContentPanel settingsPanel;
+    private Map<String, WeatherData> wm;
+    
+    
     public WeatherApp() {
+        instance = this;
         SwingUtilities.invokeLater(this::createAndShowGUI);
     }
 
@@ -48,9 +57,9 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
             // TODO: gọi API hoặc load weather theo city
         });
         mainCardPanel.add(searchPanel, "SEARCH");
-        
+
         // *** THAY ĐỔI TẠI ĐÂY: Thêm SettingsContentPanel ***  
-        settingsPanel = new SettingsContentPanel(); 
+        settingsPanel = new SettingsContentPanel();
         mainCardPanel.add(settingsPanel, "SETTING");
 
         root.add(mainCardPanel, BorderLayout.CENTER);
@@ -62,28 +71,44 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
 
     private JPanel createSidebar() {
         // Sử dụng RoundedPanel và hằng số
-        RoundedPanel bar = new RoundedPanel(25, new Color(255, 255, 255, 40)); 
-        bar.setPreferredSize(new Dimension(SIDEBAR_WIDTH, 0)); 
-        bar.setLayout(new GridLayout(6, 1, 10, 10));
+        RoundedPanel bar = new RoundedPanel(25, new Color(255, 255, 255, 40));
+        bar.setPreferredSize(new Dimension(SIDEBAR_WIDTH, 0));
+        bar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 15));
 
         JButton btnMain = new IconMenuButton("☰", "Main");
         JButton btnSearch = new IconMenuButton("🔎", "Search");
         JButton btnSetting = new IconMenuButton("⚙", "Setting");
 
+        Dimension btnSize = new Dimension(60, 60);
+        btnMain.setPreferredSize(btnSize);
+        btnSearch.setPreferredSize(btnSize);
+        btnSetting.setPreferredSize(btnSize);
+
         btnMain.addActionListener(e -> mainCards.show(mainCardPanel, "MAIN"));
         btnSearch.addActionListener(e -> mainCards.show(mainCardPanel, "SEARCH"));
         // Liên kết nút setting với panel setting
-        btnSetting.addActionListener(e -> mainCards.show(mainCardPanel, "SETTING")); 
+        btnSetting.addActionListener(e -> mainCards.show(mainCardPanel, "SETTING"));
 
         bar.add(btnMain);
         bar.add(btnSearch);
         bar.add(btnSetting);
-        
-        // Thêm các ô trống (placeholder) để căn chỉnh các icon lên trên (giống SettingsSidebar)
-        bar.add(new JPanel() {{ setOpaque(false); }});
-        bar.add(new JPanel() {{ setOpaque(false); }});
-        bar.add(new JPanel() {{ setOpaque(false); }});
 
+        // Thêm các ô trống (placeholder) để căn chỉnh các icon lên trên (giống SettingsSidebar)
+        bar.add(new JPanel() {
+            {
+                setOpaque(false);
+            }
+        });
+        bar.add(new JPanel() {
+            {
+                setOpaque(false);
+            }
+        });
+        bar.add(new JPanel() {
+            {
+                setOpaque(false);
+            }
+        });
 
         return bar;
     }
@@ -99,9 +124,32 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
         return p;
     }
 
-    public void updateWeather(WeatherData data) {
+    public void updateWeather(Map<String, WeatherData> weatherMap) {
+        wm = weatherMap;
+        String defaultLocation = ConfigManager.defaultLocation;
+        WeatherData currentLocationWeather = weatherMap.get(defaultLocation);
+        currentLocationWeather.convertTemp_K_to_C();
         if (mainWeatherPanel != null) {
-            mainWeatherPanel.updateWeather(data);
+            mainWeatherPanel.updateWeather(currentLocationWeather);
         }
+    }
+    
+    public void changeWeatherLocation(String location) {
+        WeatherData currentLocationWeather = wm.get(location);
+        currentLocationWeather.convertTemp_K_to_C();
+        if (mainWeatherPanel != null) {
+            mainWeatherPanel.updateWeather(currentLocationWeather);
+        }
+    }
+
+    public void changePanel() {
+        String location = ConfigManager.defaultLocation;
+        
+        changeWeatherLocation(location);
+        mainCards.show(mainCardPanel, "MAIN");
+    }
+
+    public static WeatherApp getInstance() {
+        return instance;
     }
 }

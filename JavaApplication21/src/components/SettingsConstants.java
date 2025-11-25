@@ -8,7 +8,7 @@ public interface SettingsConstants {
     int FRAME_HEIGHT = 720;
     
     // Kích thước Sidebar
-    int SIDEBAR_WIDTH = 96;
+    int SIDEBAR_WIDTH = 80;
     
     // Màu sắc của nền
     // Màu nền chính, hơi gradient xanh tím

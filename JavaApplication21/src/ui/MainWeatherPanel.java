@@ -1,6 +1,7 @@
 package ui;
 
 import components.*;
+import config.ConfigManager;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +32,7 @@ public class MainWeatherPanel extends JPanel {
 
     private JPanel createCenterLeft() {
         JPanel left = new RoundedPanel(20, new Color(255, 255, 255, 20));
-        left.setPreferredSize(new Dimension(720, 560));
+        left.setPreferredSize(new Dimension(740, 560));
         left.setLayout(new BorderLayout());
         left.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
 
@@ -53,7 +54,7 @@ public class MainWeatherPanel extends JPanel {
     private JPanel createCenterRight() {
         JPanel rightWrapper = new JPanel(new GridBagLayout());
         rightWrapper.setOpaque(false);
-        rightWrapper.setPreferredSize(new Dimension(350, 560));
+        rightWrapper.setPreferredSize(new Dimension(440, 560));
 
         JPanel right = new JPanel();
         right.setOpaque(false);
@@ -79,6 +80,6 @@ public class MainWeatherPanel extends JPanel {
         hourlyPanel.update(d.hourly);
         fiveDayPanel.updateForecast(d.daily);
         aqPanel.update(d.airQualityIndex);
-        sunHumPanel.update(d.sunrise, d.sunset, d.humidity);
+//        sunHumPanel.update(d.sunrise, d.sunset, d.humidity);
     }
 }

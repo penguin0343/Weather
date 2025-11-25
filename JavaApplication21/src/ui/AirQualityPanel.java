@@ -32,10 +32,10 @@ public class AirQualityPanel extends RoundedPanel {
 
         public void update(int aqi) {
             String risk;
-            if (aqi <= 50) risk = "1 - Good";
-            else if (aqi <= 100) risk = "2 - Moderate";
-            else if (aqi <= 150) risk = "3 - Low Health Risk";
-            else if (aqi <= 200) risk = "4 - Unhealthy";
+            if (aqi == 1) risk = "1 - Good";
+            else if (aqi == 2) risk = "2 - Moderate";
+            else if (aqi == 3) risk = "3 - Low Health Risk";
+            else if (aqi == 4) risk = "4 - Unhealthy";
             else risk = "5 - Very Unhealthy";
             aqiLabel.setText(risk + " (AQI: " + aqi + ")");
         }
