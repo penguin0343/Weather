@@ -45,7 +45,7 @@ public class DbQuery {
 
     public ArrayList<HourlyData> getHourlyWeather(String city) {
         String sql_query = "SELECT city_id, temperature, hours, icon FROM forecasthourly" + city.toLowerCase()
-                + " LIMIT 24";
+                + " LIMIT 12";
         ArrayList<HourlyData> hd_list = new ArrayList<>();
 
         try {
@@ -68,7 +68,7 @@ public class DbQuery {
     }
 
     public ArrayList<DailyData> getDailyWeather(String city) {
-        String sql_query = "SELECT city_id, tempmin, tempmax, days, icon FROM forecastdaily" + city.toLowerCase();
+        String sql_query = "SELECT city_id, tempmin, tempmax, days, icon FROM forecastdaily" + city.toLowerCase() + " LIMIT 5";
         ArrayList<DailyData> hd_list = new ArrayList<>();
 
         try {
@@ -101,6 +101,7 @@ public class DbQuery {
             ArrayList<DailyData> dd = getDailyWeather(entry.getValue());
             
             String sql_query = "SELECT \n"
+                    + "    c.icon AS icon,\n"
                     + "    c.city_id AS city_id,\n"
                     + "    c.description AS description,\n"
                     + "    c.temperature AS temperature,\n"
@@ -129,6 +130,7 @@ public class DbQuery {
                     Date sunsetDate = new Date(sunset * 1000);
 
                     wd = new WeatherData(
+                            rs.getString("icon"),
                             location,
                             rs.getString("description"),
                             rs.getFloat("temperature"),

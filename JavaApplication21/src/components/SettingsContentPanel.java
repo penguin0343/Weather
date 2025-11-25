@@ -1,5 +1,7 @@
 package components;
 
+import app.WeatherApp;
+import config.ConfigManager;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -64,6 +66,27 @@ public class SettingsContentPanel extends JPanel implements SettingsConstants {
         
         // Mô phỏng Toggle Switch (Sử dụng class riêng)
         ToggleSwitch toggle = new ToggleSwitch();
+        toggle.setSelected(false);
+        toggle.addActionListener(e -> {
+            
+            if (title == "Temperature Unit") {
+                ConfigManager.curentTempMetric = 
+                        toggle.isSelected() ? 
+                        ConfigManager.tempMetric.F :
+                        ConfigManager.tempMetric.C;
+                
+                WeatherApp.getInstance().updateWeather(WeatherApp.getInstance().getWeatherMap());
+            }
+            if (title == "Time format") {
+                ConfigManager.defaultTimeDisplay = 
+                        toggle.isSelected() ? 
+                        24 :
+                        12;
+                
+                WeatherApp.getInstance().updateWeather(WeatherApp.getInstance().getWeatherMap());
+            }
+        });
+        
         
         // Tùy chọn B
         JLabel labelB = new JLabel(optionB);
