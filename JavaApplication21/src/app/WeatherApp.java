@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import components.*; // Import các components như RoundedPanel, IconMenuButton, SettingsConstants...
 import config.ConfigManager;
+import java.util.HashMap;
 import java.util.Map;
 import ui.*;
 import model.*;
@@ -129,24 +130,38 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
     }
 
     public void updateWeather(Map<String, WeatherData> weatherMap) {
-        wm = weatherMap;
+        wm = new HashMap<String, WeatherData>();
+//        Copy sang wm
+        for (Map.Entry<String, WeatherData> entry : weatherMap.entrySet()) {
+            wm.put(entry.getKey(), entry.getValue().clone());
+        }
+        
         String defaultLocation = ConfigManager.defaultLocation;
+        String defaultTempMetric = ConfigManager.getCurentTempMetric();
         cwd = weatherMap.get(defaultLocation);
-        cwd.convertTemp_K_to_C();
+        cwd.converttempToDefault(defaultTempMetric);
         if (mainWeatherPanel != null) {
             mainWeatherPanel.updateWeather(cwd);
         }
     }
 
+    public Map<String, WeatherData> getWeatherMap() {
+        return wm;
+    }
+        
     public boolean changeWeatherLocation(String location) {
-
+        Map<String, WeatherData> new_wm = new HashMap<String, WeatherData>();
+//        Copy sang wm
+        for (Map.Entry<String, WeatherData> entry : wm.entrySet()) {
+            new_wm.put(entry.getKey(), entry.getValue().clone());
+        }
+        
         rwd = cwd;
-        cwd = wm.get(location);
+        cwd = new_wm.get(location);
+        String defaultTempMetric = ConfigManager.getCurentTempMetric();
+        cwd.converttempToDefault(defaultTempMetric);
         if (rwd.location.trim().equalsIgnoreCase(location.trim())) {
             return false;
-        }
-        if (cwd.currentTemp > 200) {
-            cwd.convertTemp_K_to_C();
         }
         if (mainWeatherPanel != null) {
             mainWeatherPanel.updateWeather(cwd);

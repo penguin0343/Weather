@@ -3,6 +3,7 @@ package ui;
 import components.RoundedPanel;
 import config.ConfigManager;
 import config.TempMetricConverter;
+import config.TimeDisplayConverter;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,9 @@ public class HourlyPanel extends JPanel {
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime now_plus_hours = now.plusHours(h.time);
-        String hour_time = now_plus_hours.getHour() + "h";
-        JLabel time = new JLabel(hour_time, SwingConstants.CENTER);
+        int defaultHourDisplay = ConfigManager.defaultTimeDisplay;
+        String timedisplay = TimeDisplayConverter.convertFromDefault(now_plus_hours, defaultHourDisplay);
+        JLabel time = new JLabel(timedisplay, SwingConstants.CENTER);
         JLabel icon = new JLabel(h.icon, SwingConstants.CENTER);
 
         JLabel temp = new JLabel(Math.round(h.temp) + "°C", SwingConstants.CENTER);

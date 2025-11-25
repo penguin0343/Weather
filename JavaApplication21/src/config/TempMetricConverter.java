@@ -10,8 +10,8 @@ package config;
  * @author Admin
  */
 public class TempMetricConverter {
-    public static float convert_F_to_C(float F) {
-        float C = F - 32;
+    public static float convert_K_to_F(float K) {
+        float C = 1.8f*(K-273.15f) + 32;
         return C;
     }
     

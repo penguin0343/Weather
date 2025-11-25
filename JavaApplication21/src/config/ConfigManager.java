@@ -16,10 +16,10 @@ public class ConfigManager {
 
     public static String defaultLocation = "Hanoi";
     public ArrayList<String> locationList;
-    private enum tempMetric {C, F, K};
+    public static enum tempMetric {C, F, K};
     public static tempMetric curentTempMetric;
             
-            
+    public static int defaultTimeDisplay = 12;        
             
             
             

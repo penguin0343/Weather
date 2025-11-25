@@ -31,6 +31,18 @@ public class WeatherData {
         this.sunset = sunset;
     }
     
+    
+    public void converttempToDefault(String defaultMetric) {
+        if (defaultMetric.equalsIgnoreCase("C")) {
+            convertTemp_K_to_C();
+        }
+        if (defaultMetric.equalsIgnoreCase("F")) {
+            convertTemp_K_to_F();
+        }
+    }
+    
+    
+    
     public void convertTemp_K_to_C() {
         this.currentTemp = TempMetricConverter.convert_K_to_C(this.currentTemp);
         this.minTemp = TempMetricConverter.convert_K_to_C(this.minTemp);
@@ -42,5 +54,48 @@ public class WeatherData {
             d.maxTemp = TempMetricConverter.convert_K_to_C(d.maxTemp);
             d.minTemp = TempMetricConverter.convert_K_to_C(d.minTemp);
         }
+    }
+    
+    public void convertTemp_K_to_F() {
+        this.currentTemp = TempMetricConverter.convert_K_to_F(this.currentTemp);
+        this.minTemp = TempMetricConverter.convert_K_to_F(this.minTemp);
+        this.maxTemp = TempMetricConverter.convert_K_to_F(this.maxTemp);
+        for (HourlyData h : this.hourly) {
+            h.temp = TempMetricConverter.convert_K_to_F(h.temp);
+        }
+        for (DailyData d : this.daily) {
+            d.maxTemp = TempMetricConverter.convert_K_to_F(d.maxTemp);
+            d.minTemp = TempMetricConverter.convert_K_to_F(d.minTemp);
+        }
+    }
+    
+    public WeatherData clone() {
+        java.util.List<HourlyData> newHourly = new java.util.ArrayList<>();
+        for (HourlyData hd: this.hourly) {
+            HourlyData newhd = new HourlyData(hd.time, hd.temp, hd.icon);
+            newHourly.add(newhd);
+        }
+        
+        java.util.List<DailyData> newDaily = new java.util.ArrayList<>();
+        for (DailyData dd: this.daily) {
+            DailyData newdd = new DailyData(dd.dayOfWeek, dd.maxTemp, dd.minTemp, dd.icon);
+            newDaily.add(newdd);
+        }
+        
+        WeatherData newWD = new WeatherData(
+                this.icon,
+                this.location,
+                this.description,
+                this.currentTemp,
+                this.maxTemp,
+                this.minTemp,
+                newHourly,
+                newDaily,
+                this.airQualityIndex,
+                this.humidity,
+                this.sunrise,
+                this.sunset
+        );
+        return newWD;
     }
 }
