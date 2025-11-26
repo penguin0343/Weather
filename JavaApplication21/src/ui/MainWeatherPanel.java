@@ -80,6 +80,6 @@ public class MainWeatherPanel extends JPanel {
         hourlyPanel.update(d.hourly);
         fiveDayPanel.updateForecast(d.daily);
         aqPanel.update(d.airQualityIndex);
-//        sunHumPanel.update(d.sunrise, d.sunset, d.humidity);
+        sunHumPanel.update(d.sunrise, d.sunset, d.humidity);
     }
 }

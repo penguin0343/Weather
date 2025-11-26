@@ -43,6 +43,9 @@ public class ConfigManager {
         return curentTempMetric+""+"";
     }
 
+    public static String formatTemperature(float temp) {
+        String unit = (curentTempMetric == tempMetric.F) ? "°F" : "°C";
+        return Math.round(temp) + unit;
+    }
 
-    
 }

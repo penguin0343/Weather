@@ -12,12 +12,41 @@ public class WeatherData {
     public int airQualityIndex;
     public Date sunrise, sunset;
     
-    public WeatherData() {
-        
-    }
     
-    public WeatherData(String icon, String location, String description, float currentTemp, float maxTemp, float minTemp, List<HourlyData> hourly, List<DailyData> daily, int airQualityIndex, float humidity, Date sunrise, Date sunset) {
-        this.icon = icon;
+    public final Map<String, String> OWM_TO_MAKIN = Map.ofEntries(
+            // CLEAR SKY
+            Map.entry("01d", "clear-day"),
+            Map.entry("01n", "clear-night"),
+            // FEW CLOUDS
+            Map.entry("02d", "cloudy-1-day"),
+            Map.entry("02n", "cloudy-1-night"),
+            // SCATTERED CLOUDS
+            Map.entry("03d", "cloudy-2-day"),
+            Map.entry("03n", "cloudy-2-night"),
+            // BROKEN / OVERCAST CLOUDS
+            Map.entry("04d", "cloudy-3-day"),
+            Map.entry("04n", "cloudy-3-night"),
+            // SHOWER RAIN (DRIZZLE-LIKE)
+            Map.entry("09d", "rainy-1-day"),
+            Map.entry("09n", "rainy-1-night"),
+            // RAIN
+            Map.entry("10d", "rainy-2-day"),
+            Map.entry("10n", "rainy-2-night"),
+            // THUNDERSTORM
+            Map.entry("11d", "thunderstorms-day"),
+            Map.entry("11n", "thunderstorms-night"),
+            // SNOW
+            Map.entry("13d", "snowy-1-day"),
+            Map.entry("13n", "snowy-1-night"),
+            // MIST / FOG / ATMOSPHERE
+            Map.entry("50d", "fog-day"),
+            Map.entry("50n", "fog-night")
+    );
+    
+    public WeatherData() {}
+    
+    public WeatherData(String iconUrl, String location, String description, float currentTemp, float maxTemp, float minTemp, List<HourlyData> hourly, List<DailyData> daily, int airQualityIndex, float humidity, Date sunrise, Date sunset) {
+        this.icon = iconUrl;
         this.location = location;
         this.description = description;
         this.currentTemp = currentTemp;
