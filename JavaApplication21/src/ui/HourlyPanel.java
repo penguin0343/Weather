@@ -1,5 +1,6 @@
 package ui;
 
+
 import components.RoundedPanel;
 import config.ConfigManager;
 import config.TempMetricConverter;
@@ -7,12 +8,17 @@ import config.TimeDisplayConverter;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.net.URI;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import javax.swing.border.EmptyBorder;
 import java.util.List;
+import tools.ImageUtils;
 
 public class HourlyPanel extends JPanel {
+
 
     public void update(List<HourlyData> list) {
         removeAll();
@@ -42,16 +48,18 @@ public class HourlyPanel extends JPanel {
         String timedisplay = TimeDisplayConverter.convertFromDefault(now_plus_hours, defaultHourDisplay);
         JLabel time = new JLabel(timedisplay, SwingConstants.CENTER);
         //JLabel icon = new JLabel(h.icon, SwingConstants.CENTER);
-        
-       JLabel icon = new JLabel("", SwingConstants.CENTER); // sửa dòng cũ
-try {
-    java.net.URL url = new java.net.URL(h.icon); // h.icon giờ là URL
-    ImageIcon imgIcon = new ImageIcon(url);
-    icon.setIcon(imgIcon);
-} catch (Exception e) {
-    icon.setText("☁"); // fallback nếu URL lỗi
-    e.printStackTrace();
-} 
+
+
+        JLabel icon = new JLabel("", SwingConstants.CENTER); // sửa dòng cũ
+        try {
+//            java.net.URL url = new java.net.URL(h.icon); // h.icon giờ là URL
+            ImageIcon imgIcon = ImageUtils.loadPngIcon("/assets/" + h.icon + "_t@4x.png", 60, 60);
+//            imgIcon = resizeIconHighQuality(imgIcon, 50, 50);
+            icon.setIcon(imgIcon);
+        } catch (Exception e) {
+            icon.setText("☁"); // fallback nếu URL lỗi
+            e.printStackTrace();
+        }
 
         JLabel temp = new JLabel(ConfigManager.formatTemperature(h.temp), SwingConstants.CENTER);
         for (JLabel l : new JLabel[]{time, icon, temp}) {

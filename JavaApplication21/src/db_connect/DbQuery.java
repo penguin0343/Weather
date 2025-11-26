@@ -59,7 +59,7 @@ public class DbQuery {
                 //HourlyData hd = new HourlyData(time, temp, icon);
                 
                 String iconCode = rs.getString("icon");
-                String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                String iconUrl = iconCode;
                 HourlyData hd = new HourlyData(time, temp, iconUrl);
                 hd_list.add(hd);
             }
@@ -86,7 +86,7 @@ public class DbQuery {
                 //String icon = rs.getString("icon");
                 //DailyData hd = new DailyData(time, max_temp, min_temp, icon);
                 String iconCode = rs.getString("icon");
-                String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                String iconUrl = iconCode;
                 DailyData hd = new DailyData(time, max_temp, min_temp, iconUrl);
                 hd_list.add(hd);
             }
@@ -136,7 +136,7 @@ public class DbQuery {
                     Date sunsetDate = new Date(sunset * 1000);
 
                     String iconCode = rs.getString("icon"); // Lấy mã icon (ví dụ "01d")
-                    String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                    String iconUrl = iconCode;
 
                     
                     wd = new WeatherData(

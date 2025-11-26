@@ -5,8 +5,10 @@ import config.TempMetricConverter;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
+import tools.ImageUtils;
 
 public class HeaderPanel extends JPanel {
+
     JLabel locationLabel = new JLabel();
     JLabel statusLabel = new JLabel();
     JLabel tempLabel = new JLabel();
@@ -16,15 +18,17 @@ public class HeaderPanel extends JPanel {
     public HeaderPanel() {
         setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        for (JLabel l : new JLabel[]{locationLabel, statusLabel, tempLabel, minMaxLabel, weatherIcon})
+        for (JLabel l : new JLabel[]{locationLabel, statusLabel, tempLabel, minMaxLabel, weatherIcon}) {
             l.setAlignmentX(CENTER_ALIGNMENT);
+        }
         locationLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
         tempLabel.setFont(new Font("SansSerif", Font.BOLD, 72));
         statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
         minMaxLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
         weatherIcon.setFont(new Font("SansSerif", Font.PLAIN, 70));
-        for (JLabel l : new JLabel[]{locationLabel, statusLabel, tempLabel, minMaxLabel, weatherIcon})
+        for (JLabel l : new JLabel[]{locationLabel, statusLabel, tempLabel, minMaxLabel, weatherIcon}) {
             l.setForeground(Color.WHITE);
+        }
 
         add(Box.createVerticalStrut(35));
         add(locationLabel);
@@ -42,10 +46,9 @@ public class HeaderPanel extends JPanel {
     public void update(WeatherData d) {
         locationLabel.setText(d.location);
         statusLabel.setText(d.description);
-        
-                
-    tempLabel.setText(ConfigManager.formatTemperature(d.currentTemp));
-    minMaxLabel.setText("Max: " + ConfigManager.formatTemperature(d.maxTemp) + "   Min: " + ConfigManager.formatTemperature(d.minTemp));
+
+        tempLabel.setText(ConfigManager.formatTemperature(d.currentTemp));
+        minMaxLabel.setText("Max: " + ConfigManager.formatTemperature(d.maxTemp) + "   Min: " + ConfigManager.formatTemperature(d.minTemp));
 //        String desc = d.description.toLowerCase();
 //        if (desc.contains("sun")) weatherIcon.setText("☀");
 //        else if (desc.contains("cloud")) weatherIcon.setText("☁");
@@ -53,11 +56,10 @@ public class HeaderPanel extends JPanel {
 //        else if (desc.contains("storm")) weatherIcon.setText("⛈");
         //weatherIcon.setText(d.icon);
         try {
-    java.net.URL url = new java.net.URL(d.icon); // d.icon giờ là URL
-    ImageIcon icon = new ImageIcon(url);
-    weatherIcon.setIcon(icon);
-} catch (Exception e) {
-    e.printStackTrace();
-}
+            ImageIcon imgIcon = ImageUtils.loadPngIcon("/assets/" + d.icon + "_t@4x.png", 120, 120);
+            weatherIcon.setIcon(imgIcon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

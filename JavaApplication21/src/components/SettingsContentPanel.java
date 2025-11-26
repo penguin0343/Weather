@@ -5,14 +5,15 @@ import config.ConfigManager;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import ui.SearchPanel;
 
 public class SettingsContentPanel extends JPanel implements SettingsConstants {
 
     public SettingsContentPanel() {
         //setBackground(PRIMARY_COLOR);
-        setOpaque(false); 
+        setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(30, 50, 30, 30)); 
+        setBorder(new EmptyBorder(30, 50, 30, 30));
 
         // 1. Tiêu đề SETTING
         JLabel titleLabel = new JLabel("SETTING");
@@ -25,7 +26,7 @@ public class SettingsContentPanel extends JPanel implements SettingsConstants {
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
         separator.setForeground(new Color(150, 150, 255));
         separator.setBackground(PRIMARY_COLOR);
-        separator.setMaximumSize(new Dimension(FRAME_WIDTH - 200, 5)); 
+        separator.setMaximumSize(new Dimension(FRAME_WIDTH - 200, 5));
         add(separator);
         add(Box.createVerticalStrut(30));
 
@@ -35,10 +36,10 @@ public class SettingsContentPanel extends JPanel implements SettingsConstants {
 
         // 3. Định dạng Thời gian
         add(createSettingGroup("Time format", "12-hour", "24-hour"));
-        
-        add(Box.createVerticalGlue()); 
+
+        add(Box.createVerticalGlue());
     }
-    
+
     // Hàm tạo nhóm cài đặt (Tiêu đề, Tùy chọn A, Tùy chọn B)
     private JPanel createSettingGroup(String title, String optionA, String optionB) {
         JPanel groupPanel = new JPanel();
@@ -54,41 +55,42 @@ public class SettingsContentPanel extends JPanel implements SettingsConstants {
         titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         groupPanel.add(titleLabel);
         groupPanel.add(Box.createVerticalStrut(15));
-        
+
         // Hàng tùy chọn (Label A | Toggle | Label B)
         JPanel optionRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         optionRow.setOpaque(false);
         optionRow.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
+
         // Tùy chọn A
         JLabel labelA = new JLabel(optionA);
         labelA.setFont(new Font("Arial", Font.PLAIN, 18));
         labelA.setForeground(TEXT_COLOR);
-        
+
         // Mô phỏng Toggle Switch (Sử dụng class riêng)
         ToggleSwitch toggle = new ToggleSwitch();
         toggle.setSelected(false);
         toggle.addActionListener(e -> {
-            
+
             if (title == "Temperature Unit") {
-                ConfigManager.curentTempMetric = 
-                        toggle.isSelected() ? 
-                        ConfigManager.tempMetric.F :
-                        ConfigManager.tempMetric.C;
-                
+                ConfigManager.curentTempMetric
+                        = toggle.isSelected()
+                        ? ConfigManager.tempMetric.F
+                        : ConfigManager.tempMetric.C;
+                System.out.println("check");
                 WeatherApp.getInstance().updateWeather(WeatherApp.getInstance().getWeatherMap());
+                SearchPanel.getInstance().resetWrapper();
+
             }
             if (title == "Time format") {
-                ConfigManager.defaultTimeDisplay = 
-                        toggle.isSelected() ? 
-                        24 :
-                        12;
-                
+                ConfigManager.defaultTimeDisplay
+                        = toggle.isSelected()
+                        ? 24
+                        : 12;
+
                 WeatherApp.getInstance().updateWeather(WeatherApp.getInstance().getWeatherMap());
             }
         });
-        
-        
+
         // Tùy chọn B
         JLabel labelB = new JLabel(optionB);
         labelB.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -99,10 +101,10 @@ public class SettingsContentPanel extends JPanel implements SettingsConstants {
         optionRow.add(toggle);
         optionRow.add(Box.createHorizontalStrut(10));
         optionRow.add(labelB);
-        
+
         optionRow.setMaximumSize(new Dimension(optionRow.getPreferredSize().width, optionRow.getPreferredSize().height));
         groupPanel.add(optionRow);
-        
+
         return groupPanel;
     }
 }

@@ -27,6 +27,8 @@ public class WeatherApp implements SettingsConstants { // Thêm implements Setti
     public WeatherApp(Map<String, WeatherData> wm) {
         String defaultLocation = ConfigManager.defaultLocation;
         cwd = wm.get(defaultLocation);
+        String defaultTempMetric = ConfigManager.getCurentTempMetric();
+        cwd.converttempToDefault(defaultTempMetric);
         rwd = cwd;
         instance = this;
         SwingUtilities.invokeLater(this::createAndShowGUI);

@@ -34,12 +34,12 @@ public class Main {
 //            System.out.println(wd.airQualityIndex);
 //        }
         Map<String, WeatherData> initial_map = dbquery.getWeather();
-
+        System.setProperty("sun.java2d.uiScale", "1.0");
         WeatherApp app = new WeatherApp(initial_map);
         SwingUtilities.invokeLater(() -> {
             Map<String, WeatherData> weather_map = dbquery.getWeather();
             app.updateWeather(weather_map);
-            
+
             // Timer để cập nhật định kỳ
             javax.swing.Timer t = new javax.swing.Timer(600000, e -> { // 10 phút = 600000ms
                 Map<String, WeatherData> new_weather_map = dbquery.getWeather();
