@@ -22,7 +22,7 @@ public class HeaderPanel extends JPanel {
         tempLabel.setFont(new Font("SansSerif", Font.BOLD, 72));
         statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
         minMaxLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        weatherIcon.setFont(new Font("SansSerif", Font.PLAIN, 160));
+        weatherIcon.setFont(new Font("SansSerif", Font.PLAIN, 70));
         for (JLabel l : new JLabel[]{locationLabel, statusLabel, tempLabel, minMaxLabel, weatherIcon})
             l.setForeground(Color.WHITE);
 
@@ -44,14 +44,20 @@ public class HeaderPanel extends JPanel {
         statusLabel.setText(d.description);
         
                 
-        tempLabel.setText(Math.round(d.currentTemp) + "°C");
-        minMaxLabel.setText("Max: " + Math.round(d.maxTemp) + "°C   Min: " + Math.round(d.minTemp) + "°C");
-    
+    tempLabel.setText(ConfigManager.formatTemperature(d.currentTemp));
+    minMaxLabel.setText("Max: " + ConfigManager.formatTemperature(d.maxTemp) + "   Min: " + ConfigManager.formatTemperature(d.minTemp));
 //        String desc = d.description.toLowerCase();
 //        if (desc.contains("sun")) weatherIcon.setText("☀");
 //        else if (desc.contains("cloud")) weatherIcon.setText("☁");
 //        else if (desc.contains("rain")) weatherIcon.setText("🌧");
 //        else if (desc.contains("storm")) weatherIcon.setText("⛈");
-        weatherIcon.setText(d.icon);
+        //weatherIcon.setText(d.icon);
+        try {
+    java.net.URL url = new java.net.URL(d.icon); // d.icon giờ là URL
+    ImageIcon icon = new ImageIcon(url);
+    weatherIcon.setIcon(icon);
+} catch (Exception e) {
+    e.printStackTrace();
+}
     }
 }

@@ -168,7 +168,7 @@ public class SearchPanel extends JPanel {
         cityLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
         cityLabel.setForeground(Color.WHITE);
 
-        JLabel tempLabel = new JLabel("Max: " + max + "°C   Min: " + min + "°C");
+        JLabel tempLabel = new JLabel("Max: " + ConfigManager.formatTemperature(max) + "   Min: " + ConfigManager.formatTemperature(min));
         tempLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
         tempLabel.setForeground(Color.WHITE);
 
@@ -178,9 +178,20 @@ public class SearchPanel extends JPanel {
         JPanel right = new JPanel(new BorderLayout());
         right.setOpaque(false);
 
-        JLabel weatherIcon = new JLabel(icon);
-        weatherIcon.setFont(new Font("SansSerif", Font.PLAIN, 42));
-        weatherIcon.setForeground(Color.WHITE);
+        //JLabel weatherIcon = new JLabel(icon);
+        //weatherIcon.setFont(new Font("SansSerif", Font.PLAIN, 42));
+        //weatherIcon.setForeground(Color.WHITE);
+        
+JLabel weatherIcon = new JLabel("", SwingConstants.CENTER); // tạo JLabel rỗng
+try {
+    java.net.URL url = new java.net.URL(icon); // icon giờ là URL
+    ImageIcon imgIcon = new ImageIcon(url);
+    weatherIcon.setIcon(imgIcon);
+} catch (Exception e) {
+    weatherIcon.setText("☁"); // fallback nếu URL lỗi
+    e.printStackTrace();
+}
+weatherIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel statusLabel = new JLabel(status);
         statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));

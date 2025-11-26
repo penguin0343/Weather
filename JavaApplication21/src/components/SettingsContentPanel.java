@@ -9,7 +9,8 @@ import java.awt.*;
 public class SettingsContentPanel extends JPanel implements SettingsConstants {
 
     public SettingsContentPanel() {
-        setBackground(PRIMARY_COLOR);
+        //setBackground(PRIMARY_COLOR);
+        setOpaque(false); 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(30, 50, 30, 30)); 
 

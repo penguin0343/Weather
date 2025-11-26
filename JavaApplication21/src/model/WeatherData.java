@@ -12,12 +12,10 @@ public class WeatherData {
     public int airQualityIndex;
     public Date sunrise, sunset;
     
-    public WeatherData() {
-        
-    }
+    public WeatherData() {}
     
-    public WeatherData(String icon, String location, String description, float currentTemp, float maxTemp, float minTemp, List<HourlyData> hourly, List<DailyData> daily, int airQualityIndex, float humidity, Date sunrise, Date sunset) {
-        this.icon = icon;
+    public WeatherData(String iconUrl, String location, String description, float currentTemp, float maxTemp, float minTemp, List<HourlyData> hourly, List<DailyData> daily, int airQualityIndex, float humidity, Date sunrise, Date sunset) {
+        this.icon = iconUrl;
         this.location = location;
         this.description = description;
         this.currentTemp = currentTemp;

@@ -10,6 +10,7 @@ import java.time.format.TextStyle;
 import javax.swing.border.EmptyBorder;
 import java.util.List;
 import java.util.Locale;
+import db_connect.DbQuery;
 
 public class FiveDayPanel extends RoundedPanel {
         private JPanel listPanel;
@@ -53,7 +54,18 @@ public class FiveDayPanel extends RoundedPanel {
             dayLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
             dayLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            JLabel iconLabel = new JLabel(f.icon, SwingConstants.CENTER);
+            //JLabel iconLabel = new JLabel(f.icon, SwingConstants.CENTER);
+            JLabel iconLabel = new JLabel("", SwingConstants.CENTER); // tạo JLabel rỗng
+try {
+    java.net.URL url = new java.net.URL(f.icon); // f.icon giờ là URL
+    ImageIcon imgIcon = new ImageIcon(url);
+    iconLabel.setIcon(imgIcon);
+} catch (Exception e) {
+    iconLabel.setText("☁"); // fallback nếu URL lỗi
+    e.printStackTrace();
+}
+
+
             iconLabel.setForeground(Color.WHITE);
             iconLabel.setFont(new Font("SansSerif", Font.PLAIN, 32)); // to hơn
             iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

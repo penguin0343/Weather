@@ -41,9 +41,19 @@ public class HourlyPanel extends JPanel {
         int defaultHourDisplay = ConfigManager.defaultTimeDisplay;
         String timedisplay = TimeDisplayConverter.convertFromDefault(now_plus_hours, defaultHourDisplay);
         JLabel time = new JLabel(timedisplay, SwingConstants.CENTER);
-        JLabel icon = new JLabel(h.icon, SwingConstants.CENTER);
+        //JLabel icon = new JLabel(h.icon, SwingConstants.CENTER);
+        
+       JLabel icon = new JLabel("", SwingConstants.CENTER); // sửa dòng cũ
+try {
+    java.net.URL url = new java.net.URL(h.icon); // h.icon giờ là URL
+    ImageIcon imgIcon = new ImageIcon(url);
+    icon.setIcon(imgIcon);
+} catch (Exception e) {
+    icon.setText("☁"); // fallback nếu URL lỗi
+    e.printStackTrace();
+} 
 
-        JLabel temp = new JLabel(Math.round(h.temp) + "°C", SwingConstants.CENTER);
+        JLabel temp = new JLabel(ConfigManager.formatTemperature(h.temp), SwingConstants.CENTER);
         for (JLabel l : new JLabel[]{time, icon, temp}) {
             l.setForeground(Color.WHITE);
             l.setAlignmentX(CENTER_ALIGNMENT);

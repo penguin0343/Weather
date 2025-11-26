@@ -55,8 +55,12 @@ public class DbQuery {
             while (rs.next()) {
                 int time = rs.getInt("hours");
                 float temp = rs.getFloat("temperature");
-                String icon = rs.getString("icon");
-                HourlyData hd = new HourlyData(time, temp, icon);
+                //String icon = rs.getString("icon");
+                //HourlyData hd = new HourlyData(time, temp, icon);
+                
+                String iconCode = rs.getString("icon");
+                String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                HourlyData hd = new HourlyData(time, temp, iconUrl);
                 hd_list.add(hd);
             }
 
@@ -79,9 +83,11 @@ public class DbQuery {
                 int time = rs.getInt("days");
                 float min_temp = rs.getFloat("tempmin");
                 float max_temp = rs.getFloat("tempmax");
-
-                String icon = rs.getString("icon");
-                DailyData hd = new DailyData(time, max_temp, min_temp, icon);
+                //String icon = rs.getString("icon");
+                //DailyData hd = new DailyData(time, max_temp, min_temp, icon);
+                String iconCode = rs.getString("icon");
+                String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                DailyData hd = new DailyData(time, max_temp, min_temp, iconUrl);
                 hd_list.add(hd);
             }
 
@@ -129,8 +135,13 @@ public class DbQuery {
                     Date sunriseDate = new Date(sunrise * 1000);
                     Date sunsetDate = new Date(sunset * 1000);
 
+                    String iconCode = rs.getString("icon"); // Lấy mã icon (ví dụ "01d")
+                    String iconUrl = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+
+                    
                     wd = new WeatherData(
-                            rs.getString("icon"),
+                            //rs.getString("icon"),
+                            iconUrl,
                             location,
                             rs.getString("description"),
                             rs.getFloat("temperature"),
