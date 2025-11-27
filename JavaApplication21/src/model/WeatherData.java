@@ -9,6 +9,7 @@ public class WeatherData {
     public float currentTemp, maxTemp, minTemp, humidity;
     public java.util.List<HourlyData> hourly;
     public java.util.List<DailyData> daily;
+    public java.util.List<DailyData> daily_tmp;
     public int airQualityIndex;
     public Date sunrise, sunset;
     
@@ -16,6 +17,7 @@ public class WeatherData {
     public WeatherData() {}
     
     public WeatherData(String iconUrl, String location, String description, float currentTemp, float maxTemp, float minTemp, List<HourlyData> hourly, List<DailyData> daily, int airQualityIndex, float humidity, Date sunrise, Date sunset) {
+        this.daily_tmp = daily;
         this.icon = iconUrl;
         this.location = location;
         this.description = description;
@@ -23,7 +25,7 @@ public class WeatherData {
         this.maxTemp = daily.getFirst().maxTemp;
         this.minTemp = daily.getFirst().minTemp;
         this.hourly = hourly;
-        this.daily = daily.subList(1, daily.size());
+        this.daily = new ArrayList<DailyData>(daily.subList(1, daily.size()));
         this.airQualityIndex = airQualityIndex;
         this.humidity = humidity;
         this.sunrise = sunrise;
@@ -76,7 +78,7 @@ public class WeatherData {
         }
         
         java.util.List<DailyData> newDaily = new java.util.ArrayList<>();
-        for (DailyData dd: this.daily) {
+        for (DailyData dd: this.daily_tmp) {
             DailyData newdd = new DailyData(dd.dayOfWeek, dd.maxTemp, dd.minTemp, dd.icon);
             newDaily.add(newdd);
         }
