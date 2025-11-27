@@ -149,7 +149,7 @@ public class SearchPanel extends JPanel {
         JLabel title = new JLabel(titleText);
         title.setFont(new Font("SansSerif", Font.BOLD, 14));
         title.setForeground(Color.WHITE);
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(0, 5, 6, 0));
 
         sectionPanel.add(title);
@@ -161,7 +161,7 @@ public class SearchPanel extends JPanel {
     private RoundedPanel makeCityCard(String city, String status, String icon, float max, float min) {
         RoundedPanel card = new RoundedPanel(18, new Color(255, 255, 255, 45));
         card.setLayout(new BorderLayout());
-        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
         card.setBorder(BorderFactory.createEmptyBorder(14, 18, 14, 18));
 
         JPanel left = new JPanel();
@@ -169,15 +169,15 @@ public class SearchPanel extends JPanel {
         left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
 
         JLabel cityLabel = new JLabel(city);
-        cityLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        cityLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         cityLabel.setForeground(Color.WHITE);
 
         JLabel tempLabel = new JLabel("Max: " + ConfigManager.formatTemperature(max) + "   Min: " + ConfigManager.formatTemperature(min));
-        tempLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        tempLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
         tempLabel.setForeground(Color.WHITE);
 
-        left.add(cityLabel);
-        left.add(tempLabel);
+        left.add(cityLabel, BorderLayout.CENTER);
+        left.add(tempLabel, BorderLayout.SOUTH);
 
         JPanel right = new JPanel(new BorderLayout());
         right.setOpaque(false);
@@ -193,7 +193,7 @@ public class SearchPanel extends JPanel {
         weatherIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel statusLabel = new JLabel(status);
-        statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        statusLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
         statusLabel.setForeground(Color.WHITE);
         statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -293,7 +293,7 @@ public class SearchPanel extends JPanel {
         removeAll();    // Xóa tất cả component con
         revalidate();    // Cập nhật layout
         repaint();
-        
+
         setOpaque(false);
         setLayout(new GridBagLayout());
 
@@ -385,13 +385,26 @@ public class SearchPanel extends JPanel {
 
         wrapper.add(searchBar);
         wrapper.add(Box.createVerticalStrut(20));
-
+        WeatherData rwd;
+        WeatherData wd;
         // ===== SECTIONS =====
-        WeatherData wd = WeatherApp.getInstance().getCurrentWeatherData();
+        System.out.println(this.recent);
+        rwd = WeatherApp.getInstance().getRecentWeatherData();
+        wd = WeatherApp.getInstance().getCurrentWeatherData();
+
+        if (rwd.location != wd.location) {
+            wrapper.add(createSection("RECENT",
+                    makeCityCard(rwd.location, rwd.description, rwd.icon, (int) rwd.maxTemp, (int) rwd.minTemp)
+            ));
+
+            wrapper.add(Box.createVerticalStrut(20));
+        }
 
         wrapper.add(createSection("CURRENT LOCATION",
                 makeCityCard(wd.location, wd.description, wd.icon, (int) wd.maxTemp, (int) wd.minTemp)
         ));
+
+        wrapper.add(Box.createVerticalStrut(20));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
