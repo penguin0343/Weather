@@ -17,13 +17,13 @@ public class SettingsUI extends JFrame implements SettingsConstants {
         getContentPane().setBackground(PRIMARY_COLOR);
 
         // --- 1. Tạo thanh điều hướng bên trái (Sử dụng class đã tách) ---
-        JPanel navPanel = new SettingsSidebar(); 
+//        JPanel navPanel = new SettingsSidebar(); 
         
         // --- 2. Tạo nội dung cài đặt chính (Sử dụng class đã tách) ---
         JPanel contentPanel = new SettingsContentPanel();
 
         // Thêm các phần vào JFrame
-        add(navPanel, BorderLayout.WEST);
+//        add(navPanel, BorderLayout.WEST);
         add(contentPanel, BorderLayout.CENTER);
 
         setLocationRelativeTo(null); 
