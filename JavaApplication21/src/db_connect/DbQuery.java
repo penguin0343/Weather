@@ -4,16 +4,12 @@
  */
 package db_connect;
 
-import com.mysql.cj.jdbc.PreparedStatementWrapper;
-import com.mysql.cj.jdbc.result.ResultSetMetaData;
-import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import model.DailyData;
@@ -72,7 +68,7 @@ public class DbQuery {
     }
 
     public ArrayList<DailyData> getDailyWeather(String city) {
-        String sql_query = "SELECT city_id, tempmin, tempmax, days, icon FROM forecastdaily" + city.toLowerCase() + " LIMIT 5";
+        String sql_query = "SELECT city_id, tempmin, tempmax, days, icon FROM forecastdaily" + city.toLowerCase() + " LIMIT 6";
         ArrayList<DailyData> hd_list = new ArrayList<>();
 
         try {

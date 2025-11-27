@@ -131,7 +131,7 @@ public class SearchPanel extends JPanel {
         WeatherData wd = WeatherApp.getInstance().getCurrentWeatherData();
 
         wrapper.add(createSection("CURRENT LOCATION",
-                makeCityCard(wd.location, wd.description, wd.icon, (int) wd.maxTemp, (int) wd.minTemp)
+                makeCityCard(wd.location, wd.description, wd.icon, wd.maxTemp, wd.minTemp)
         ));
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -158,7 +158,7 @@ public class SearchPanel extends JPanel {
         return sectionPanel;
     }
 
-    private RoundedPanel makeCityCard(String city, String status, String icon, int max, int min) {
+    private RoundedPanel makeCityCard(String city, String status, String icon, float max, float min) {
         RoundedPanel card = new RoundedPanel(18, new Color(255, 255, 255, 45));
         card.setLayout(new BorderLayout());
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
@@ -252,14 +252,14 @@ public class SearchPanel extends JPanel {
             WeatherData wd = WeatherApp.getInstance().getRecentWeatherData();
             wrapper.removeSectionsComponents();
             wrapper.add(createSection("RECENT",
-                    makeCityCard(wd.location, wd.description, wd.icon, (int) wd.maxTemp, (int) wd.minTemp)
+                    makeCityCard(wd.location, wd.description, wd.icon, wd.maxTemp, wd.minTemp)
             ));
 
             wrapper.add(Box.createVerticalStrut(20));
 
             wd = WeatherApp.getInstance().getCurrentWeatherData();
             wrapper.add(createSection("CURRENT LOCATION",
-                    makeCityCard(wd.location, wd.description, wd.icon, (int) wd.maxTemp, (int) wd.minTemp)
+                    makeCityCard(wd.location, wd.description, wd.icon, wd.maxTemp, wd.minTemp)
             ));
 
             wrapper.add(Box.createVerticalStrut(20));
