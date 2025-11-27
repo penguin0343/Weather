@@ -2,7 +2,7 @@ package app;
 
 import javax.swing.*;
 import java.awt.*;
-import components.*; // Import tất cả các components đã tách
+import components.*; 
 
 public class SettingsUI extends JFrame implements SettingsConstants {
 

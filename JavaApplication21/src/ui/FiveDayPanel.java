@@ -16,7 +16,6 @@ import tools.ImageUtils;
 public class FiveDayPanel extends RoundedPanel {
 
     private JPanel listPanel;
-//
 
     public FiveDayPanel() {
         super(20, new Color(255, 255, 255, 25));
@@ -70,7 +69,7 @@ public class FiveDayPanel extends RoundedPanel {
         }
 
         iconLabel.setForeground(Color.WHITE);
-        iconLabel.setFont(new Font("SansSerif", Font.PLAIN, 32)); // to hơn
+        iconLabel.setFont(new Font("SansSerif", Font.PLAIN, 32));
         iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel tempLabel = new JLabel((int) f.maxTemp + "° / " + (int) f.minTemp + "°", SwingConstants.CENTER);

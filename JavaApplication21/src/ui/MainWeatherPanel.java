@@ -70,7 +70,6 @@ public class MainWeatherPanel extends JPanel {
         right.add(aqPanel);
         right.add(Box.createVerticalStrut(24));
         right.add(sunHumPanel);
-        //right.add(Box.createVerticalGlue());
         rightWrapper.add(right, new GridBagConstraints());
         return rightWrapper;
     }

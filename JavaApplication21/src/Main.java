@@ -28,11 +28,7 @@ public class Main {
         DbQuery dbquery = new DbQuery(dbconnector.getConn(), dbconnector.getStmt(), dbconnector.getRs());
 
         ConfigManager cfm = new ConfigManager();
-//        for(Map.Entry<String, WeatherData> entry : weather_map.entrySet()){
-//            System.out.println(entry.getKey());
-//            WeatherData wd = entry.getValue();
-//            System.out.println(wd.airQualityIndex);
-//        }
+
         Map<String, WeatherData> initial_map = dbquery.getWeather();
         System.setProperty("sun.java2d.uiScale", "1.0");
         WeatherApp app = new WeatherApp(initial_map);

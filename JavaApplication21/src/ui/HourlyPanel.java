@@ -19,14 +19,15 @@ import tools.ImageUtils;
 
 public class HourlyPanel extends JPanel {
 
+    public HourlyPanel() {
+    setOpaque(false);
+    setBorder(new EmptyBorder(0, 0, 12, 0));
+}
 
     public void update(List<HourlyData> list) {
         removeAll();
         setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-//        if (list == null) {
-//            list = Arrays.asList(new HourlyData("Now", 19, "☁"));
-//        }
 
         for (HourlyData h : list) {
             add(makeCard(h));
@@ -47,14 +48,9 @@ public class HourlyPanel extends JPanel {
         int defaultHourDisplay = ConfigManager.defaultTimeDisplay;
         String timedisplay = TimeDisplayConverter.convertFromDefault(now_plus_hours, defaultHourDisplay);
         JLabel time = new JLabel(timedisplay, SwingConstants.CENTER);
-        //JLabel icon = new JLabel(h.icon, SwingConstants.CENTER);
-
-
-        JLabel icon = new JLabel("", SwingConstants.CENTER); // sửa dòng cũ
+        JLabel icon = new JLabel("", SwingConstants.CENTER); 
         try {
-//            java.net.URL url = new java.net.URL(h.icon); // h.icon giờ là URL
             ImageIcon imgIcon = ImageUtils.loadPngIcon("/assets/" + h.icon + "_t@4x.png", 60, 60);
-//            imgIcon = resizeIconHighQuality(imgIcon, 50, 50);
             icon.setIcon(imgIcon);
         } catch (Exception e) {
             icon.setText("☁"); // fallback nếu URL lỗi

@@ -49,14 +49,9 @@ public class HeaderPanel extends JPanel {
 
         tempLabel.setText(ConfigManager.formatTemperature(d.currentTemp));
         minMaxLabel.setText("Max: " + ConfigManager.formatTemperature(d.maxTemp) + "   Min: " + ConfigManager.formatTemperature(d.minTemp));
-//        String desc = d.description.toLowerCase();
-//        if (desc.contains("sun")) weatherIcon.setText("☀");
-//        else if (desc.contains("cloud")) weatherIcon.setText("☁");
-//        else if (desc.contains("rain")) weatherIcon.setText("🌧");
-//        else if (desc.contains("storm")) weatherIcon.setText("⛈");
-        //weatherIcon.setText(d.icon);
+        
         try {
-            ImageIcon imgIcon = ImageUtils.loadPngIcon("/assets/" + d.icon + "_t@4x.png", 120, 120);
+            ImageIcon imgIcon = ImageUtils.loadPngIcon("/assets/" + d.icon + "_t@4x.png", 210, 210);
             weatherIcon.setIcon(imgIcon);
         } catch (Exception e) {
             e.printStackTrace();
